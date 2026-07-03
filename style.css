@@ -1,0 +1,31 @@
+body {
+    background-color: #f5f7fa;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+
+.card {
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.alert {
+    border-radius: 4px;
+}
+
+table {
+    font-size: 14px;
+}
