@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布商品 - 校园二手集市</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">校园二手集市</a>
+        <div class="ms-auto text-white">
+            <a href="/profile" class="text-white me-3">个人中心</a>
+            <a href="/logout" class="text-white">退出</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">发布二手商品</div>
+                <div class="card-body">
+                    {% if msg %}
+                    <div class="alert alert-danger">{{ msg }}</div>
+                    {% endif %}
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">商品名称</label>
+                            <input type="text" name="goods_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">商品分类</label>
+                            <select name="category" class="form-select" required>
+                                <option value="书籍">书籍</option>
+                                <option value="数码">数码</option>
+                                <option value="生活用品">生活用品</option>
+                                <option value="服饰">服饰</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">商品价格（元）</label>
+                            <input type="number" step="0.01" name="price" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">商品描述</label>
+                            <textarea name="description" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">商品图片</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">发布商品</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
