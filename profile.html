@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 校园二手集市</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">校园二手集市</a>
+        <div class="ms-auto text-white">
+    {% if session.user_id %}
+        <span>欢迎，{{ session.username }}</span>
+        {% if session.role == 1 %}
+        <a href="/admin" class="text-white ms-3">管理后台</a>
+        {% endif %}
+        <a href="/publish" class="text-white ms-3">发布商品</a>
+        <a href="/profile" class="text-white ms-3">个人中心</a>
+        <a href="/logout" class="text-white ms-3">退出登录</a>
+    {% else %}
+        <a href="/login" class="text-white">登录</a>
+        <a href="/register" class="text-white ms-3">注册</a>
+    {% endif %}
+</div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">个人信息</div>
+        <div class="card-body">
+            <p>用户名：{{ user_info.username }}</p>
+            <p>学号：{{ user_info.student_id }}</p>
+            <p>联系方式：{{ user_info.contact }}</p>
+            <p>注册时间：{{ user_info.create_time }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">我的商品</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>商品名称</th>
+                    <th>分类</th>
+                    <th>价格</th>
+                    <th>状态</th>
+                    <th>发布时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for goods in my_goods %}
+                <tr>
+                    <td>{{ goods.goods_name }}</td>
+                    <td>{{ goods.category }}</td>
+                    <td>¥{{ goods.price }}</td>
+                    <td>
+                        {% if goods.status == 0 %}
+                        <span class="text-success">在售</span>
+                        {% else %}
+                        <span class="text-secondary">已售出</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ goods.publish_time }}</td>
+                    <td>
+                        <a href="/goods/edit/{{ goods.goods_id }}" class="btn btn-sm btn-primary me-1">编辑</a>
+                        {% if goods.status == 0 %}
+                        <a href="/goods/off/{{ goods.goods_id }}" class="btn btn-sm btn-warning me-1">标记已售出</a>
+                        {% endif %}
+                        <a href="/goods/delete/{{ goods.goods_id }}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('确认删除该商品吗？删除后无法恢复。')">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if not my_goods %}
+            <div class="text-center text-muted py-3">暂无发布的商品</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
